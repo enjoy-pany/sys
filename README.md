@@ -15,7 +15,7 @@ sso
 权限
 
 
-## LOG
+## Log
 ### 一、初始化git目录
 	1. 生成 ssh-keygen -t rsa -C "xxx.xxx@xx.com" 
 	2. cd ~/.ssh
@@ -29,7 +29,7 @@ sso
 	2. vue init webpack //在当前项目目录 直接初始化
 	3. npm/cnpm i
 	4. npm run dev -> runing -> vue-cli done
-![](./screen/1.png)
+![](screen/1.png)
 
 	5. git add .
 	6. git commit -m "init vue cli"
@@ -65,6 +65,6 @@ export default {
 <style scoped>
 </style>
 ```
-![](./screen/2.png)
+![](screen/2.png)
 	
 	5. element-ui done
