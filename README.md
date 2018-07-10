@@ -68,3 +68,11 @@ export default {
 ![element-ui sucess](screen/2.png)
 	
 	5. element-ui done
+
+### 四、安装less
+	1. cnpm install less less-loader style-loader --save
+	2. build-> webpack.base.conf.js -> 
+		{
+		  test: /\.less$/,
+		  loader: 'style-loader!css-loader!less-loader'
+		}
