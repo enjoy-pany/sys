@@ -1,7 +1,7 @@
 # sys
 General system framework for vue
 
-##LOG
+## LOG
 ### 一、初始化git目录
 	1. 生成 ssh-keygen -t rsa -C "xxx.xxx@xx.com" 
 	2. cd ~/.ssh
