@@ -26,5 +26,15 @@ export default {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    position: relative;
+    .view_wrap {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 200px;
+      top: 50px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
   }
 </style>
