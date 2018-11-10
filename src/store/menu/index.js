@@ -7,26 +7,40 @@ const menu = [
 		},
 		component: _ => import('../../page/main.vue'),
 		redirect: '',
-		// children: []
 	},
 	{
 		name: '工单中心',
 		path: '/ordercenter',
 		meta: {
-			icon: 'el-icon-location'
+			icon: 'el-icon-tickets'
 		},
-		component: _ => import('../../page/orderCenter/orderList.vue'),
+		component: _ => import('../../page/main.vue'),
 		redirect: '',
 		children: [
 			{
 				name: '工单列表',
 				path: '/ordercenter/orderlist',
-				meta: {
-					icon: 'el-icon-location'
-				},
-				// component: _ => import('../../page/orderCenter/orderList.vue'),
+				component: _ => import('../../page/orderCenter/orderList.vue'),
 				redirect: '',
-				// children: []
+
+			}
+		]
+
+	},
+	{
+		name: '其他',
+		path: '/othercenter',
+		meta: {
+			icon: 'el-icon-picture'
+		},
+		component: _ => import('../../page/main.vue'),
+		redirect: '',
+		children: [
+			{
+				name: '图片列表',
+				path: '/othercenter/imagelist',
+				component: _ => import('../../page/otherCenter/imageList.vue'),
+				redirect: '',
 
 			}
 		]

@@ -1,16 +1,15 @@
 <template>
   <el-aside width="200px" class="navLeft">
     <el-menu
-      default-active="2"
-      class="el-menu-vertical-demo"
+      default-active="0"
       @open="handleOpen"
       @close="handleClose">
       <template v-for="(item, index) in menus">
-        <!-- <el-menu-item v-if="!item.children" :index="'#' + item.path" @click="jump(item.path)">
-            <i :class="['icon iconfont', item.meta.icon]"></i>
-            <span slot="title">{{ item.meta.label || item.name }}</span>
-        </el-menu-item> -->
-        <el-submenu :key="index" :index="`${index}`">
+        <el-menu-item v-if="!item.children" :index="`${index}`" @click="goPath(item.path)">
+            <i :class="item.meta.icon"></i>
+            <span slot="title">{{item.name }}</span>
+        </el-menu-item>
+        <el-submenu v-else :key="index" :index="`${index}`">
           <template slot="title">
             <i :class="item.meta.icon"></i>
             <span>{{item.name}}</span>
