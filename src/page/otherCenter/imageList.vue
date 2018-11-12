@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="navBar">
+  <div class="navBarCon">
     <levelbar></levelbar>
   </div>
   <img :src="imgUrl" alt="">

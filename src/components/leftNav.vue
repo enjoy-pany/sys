@@ -1,7 +1,6 @@
 <template>
   <el-aside width="200px" class="navLeft">
     <el-menu
-      default-active="0"
       @open="handleOpen"
       @close="handleClose">
       <template v-for="(item, index) in menus">

@@ -1,11 +1,9 @@
 <template>
-<div>
   <div class="navBar">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item v-for="item in menusList" :to="{ path: item.path }">{{item.name}}</el-breadcrumb-item>
     </el-breadcrumb>
   </div>
-</div>
 </template>
 <script>
 import { mapState } from 'vuex';
@@ -47,5 +45,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+	.navBar {
+		margin-bottom: 20px;
+	}
 </style>
