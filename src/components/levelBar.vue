@@ -2,10 +2,6 @@
 <div>
   <div class="navBar">
     <el-breadcrumb separator="/">
-      <!-- <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-      <el-breadcrumb-item>活动详情</el-breadcrumb-item> -->
       <el-breadcrumb-item v-for="item in menusList" :to="{ path: item.path }">{{item.name}}</el-breadcrumb-item>
     </el-breadcrumb>
   </div>
@@ -20,29 +16,33 @@ export default {
 		}
 	},
 	methods: {
-		getNowMenus(menus) {
-			for(let item of menus) {
-				console.log(item.name,this.$route.name)
-				if(item.name == this.$route.name) {
-					return item
+		getNowMenus(now,menus,node) {
+			if(menus) {
+				for(let i in menus) {				
+					if(menus[i].name == now.name) {
+						if(!node) {
+							return 
+						}
+						this.menusList.unshift(node)
+						this.getNowMenus(node,this.menu,null)
+					}else {
+						this.getNowMenus(now,menus[i].children,menus[i])
+					}
 				}
-				getNowMenus(item.children)
 			}
 		},
-		getMenusList(menus) {
-			if(!menus.children) return
-			this.menusList.push(menus);
-			getMenusList(menus.children)
+		initMenus() {
+			this.menusList.push(this.$route)
+	    	this.getNowMenus(this.menusList[0],this.menu,null)
 		}
 	},
 	computed: {
         ...mapState({
-            menus: state => state.menus.menuData
+            menu: state => state.menus.menuData
         })
     },
     mounted() {
-    	// this.getNowMenus(this.menus)
-    	
+    	this.initMenus()	
     }
 }
 </script>

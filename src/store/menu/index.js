@@ -22,6 +22,15 @@ const menu = [
 				path: '/ordercenter/orderlist',
 				component: _ => import('../../page/orderCenter/orderList.vue'),
 				redirect: '',
+				children: [
+					{
+						name: '工单详情',
+						path: '/ordercenter/orderlist/orderdetail',
+						component: _ => import('../../page/orderCenter/orderDetail.vue'),
+						redirect: '',
+
+					}
+				]
 
 			}
 		]
