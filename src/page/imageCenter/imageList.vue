@@ -1,8 +1,5 @@
 <template>
 <div>
-  <div class="navBarCon">
-    <levelbar></levelbar>
-  </div>
   <img :src="imgUrl" alt="">
   <el-button @click="nextPage()">下一张</el-button>
   <!-- <vue-waterfall-easy :imgsArr="imgsArr" @scrollReachBottom="getData"></vue-waterfall-easy> -->
@@ -11,7 +8,7 @@
 <script>
 import vueWaterfallEasy from 'vue-waterfall-easy'
 import axios from 'axios'
-import levelbar from '@/components/levelbar'
+// import levelbar from '@/components/levelbar'
 export default {
   data() {
     return {
@@ -28,8 +25,7 @@ export default {
     }
   },
   components: {
-    vueWaterfallEasy,
-    levelbar
+    vueWaterfallEasy
   },
   methods: {
     getData() {

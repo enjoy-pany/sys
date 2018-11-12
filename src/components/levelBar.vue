@@ -1,7 +1,7 @@
 <template>
   <div class="navBar">
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item v-for="item in menusList" :to="{ path: item.path }">{{item.name}}</el-breadcrumb-item>
+      <el-breadcrumb-item v-for="item in menusList" :to="{ path: item.path }" :key="item.name">{{item.name}}</el-breadcrumb-item>
     </el-breadcrumb>
   </div>
 </template>
@@ -39,6 +39,16 @@ export default {
             menu: state => state.menus.menuData
         })
     },
+    watch: {
+	    '$route' (val, old) {
+	        // 当前路由
+	        // console.log(val)
+	        // 上一个路由
+	        // console.log(old)
+	        this.menusList.splice(0,this.menusList.length)
+	        this.initMenus()
+	    }
+	},
     mounted() {
     	this.initMenus()	
     }

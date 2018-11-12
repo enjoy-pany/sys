@@ -1,15 +1,12 @@
 <template>
 <div>
-  <div class="navBar">
-    <levelbar></levelbar>
-  </div>
   <div class="formCon">
 
   </div>
 </div>
 </template>
 <script>
-import levelbar from '@/components/levelbar'
+// import levelbar from '@/components/levelbar'
 export default {
     data() {
         return {
@@ -17,7 +14,7 @@ export default {
         }
     },
     components: {
-        levelbar
+        // levelbar
     }
 }
 </script>

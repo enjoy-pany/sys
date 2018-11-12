@@ -3,6 +3,7 @@
       <top-nav></top-nav>
       <left-nav></left-nav>
       <div class="view_wrap">
+          <levelbar></levelbar>
           <router-view></router-view>
       </div>
   </div>
@@ -10,6 +11,7 @@
 <script>
 import leftNav from '../components/leftNav.vue'
 import topNav from '../components/topNav.vue'
+import levelbar from '@/components/levelbar'
 
 export default {
   data() {
@@ -17,7 +19,8 @@ export default {
   },
   components: {
     leftNav,
-    topNav
+    topNav,
+    levelbar
   }
 }
 </script>
