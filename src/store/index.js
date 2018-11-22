@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import menus from './menu';
+import task from './task';
 
 Vue.use(Vuex);
 
@@ -10,7 +11,8 @@ const actions = {}
 const getters = {}
 
 const modules = {
-    menus
+    menus,
+    task
 };
 
 export default new Vuex.Store({

@@ -64,7 +64,7 @@ const menu = [
 	},
 	{
 		name: '多媒体',
-		path: '/imagecenter',
+		path: '/mediacenter',
 		meta: {
 			icon: 'el-icon-news'
 		},
@@ -73,8 +73,8 @@ const menu = [
 		children: [
 			{
 				name: '音频大世界',
-				path: '/imagecenter/imagelist',
-				component: _ => import('../../page/imagecenter/imageList.vue'),
+				path: '/mediacenter/mutiaudio',
+				// component: _ => import('../../page/mediaCenter/mutiAudio.vue'),
 				redirect: '',
 
 			},
@@ -96,10 +96,43 @@ const menu = [
 
 	},
 	{
+		name: 'Canvas',
+		path: '/canvas',
+		meta: {
+			icon: 'el-icon-edit'
+		},
+		component: _ => import('../../page/main.vue'),
+		redirect: '',
+		children: [
+			{
+				name: '图形绘制与命中检测',
+				path: '/canvas/draw',
+				component: _ => import('../../page/canvasDemo/draw.vue'),
+				redirect: '',
+
+			},
+			{
+				name: '图片缩放及拖拽',
+				path: '/canvas/scale',
+				component: _ => import('../../page/canvasDemo/scale.vue'),
+				redirect: '',
+
+			},
+			{
+				name: '边界判定',
+				path: '/canvas/imagelist',
+				component: _ => import('../../page/imagecenter/imageList.vue'),
+				redirect: '',
+
+			}
+		]
+
+	},
+	{
 		name: '个人组件库',
 		path: '/component',
 		meta: {
-			icon: 'el-icon-star-off'
+			icon: 'el-icon-goods'
 		},
 		component: _ => import('../../page/main.vue'),
 		redirect: '',
@@ -157,7 +190,14 @@ const menu = [
 		redirect: '',
 		children: [
 			{
-				name: '啦啦啦啦',
+				name: 'menu抽离及面包屑算法',
+				path: '/collection/imagelist',
+				component: _ => import('../../page/imagecenter/imageList.vue'),
+				redirect: '',
+
+			},
+			{
+				name: 'lalala',
 				path: '/collection/imagelist',
 				component: _ => import('../../page/imagecenter/imageList.vue'),
 				redirect: '',
