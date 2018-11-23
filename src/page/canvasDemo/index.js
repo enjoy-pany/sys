@@ -47,7 +47,7 @@ class Canvas {
      */
     drawRect(rectArr){
     	this.clearAllRect()
-    	rectArr.map((rect)=> {
+    	rectArr.forEach((rect)=> {
     		this.context.beginPath();
 	        this.context.rect(rect.x,rect.y,rect.width,rect.height);
 	        this.context.stroke();
@@ -58,13 +58,16 @@ class Canvas {
      * 命中判定
      */
 
-    hitJudge(rectArr,pos,fn){
-    	rectArr.map((rect, index)=> {
-    		this.drawRect([rect]);
+    hitJudge(rectArr,pos){
+    	for(let i in rectArr) {
+    		this.drawRect([rectArr[i]])
     		if(this.context.isPointInPath(pos.x, pos.y)) {
-    			fn(index)
+    			this.drawRect(rectArr)
+    			return i
     		}
-    	})
+    	}
+    	this.drawRect(rectArr)
+    	return (-1)
     }
 
     /**

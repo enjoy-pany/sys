@@ -34,13 +34,13 @@ export default {
             event.preventDefault();
             var loc = this.canvas.windowToCanvas(event.x, event.y);
             if(this.seleBtn) {
-                this.canvas.hitJudge(this.rectArr, {x: loc.x, y: loc.y},(value)=> {
-                    this.seleIndex = value
-                })
+                this.seleIndex =this.canvas.hitJudge(this.rectArr, {x: loc.x, y: loc.y})
+                console.log(this.seleIndex)
+                if(this.seleIndex == -1) { //未点中图形
+                    return
+                }
                 var diffX = loc.x - this.rectArr[this.seleIndex].x
                 var diffY = loc.y - this.rectArr[this.seleIndex].y
-                console.log(this.seleIndex)
-                this.canvas.drawRect(this.rectArr)
                 if (event.buttons == 1) {
                     this.canvas.canvas.onmousemove = (evt) => {
                         var posl = this.canvas.windowToCanvas(evt.clientX, evt.clientY);
