@@ -119,7 +119,14 @@ const menu = [
 
 			},
 			{
-				name: '边界判定',
+				name: '绘制音频',
+				path: '/canvas/drawaudio',
+				component: _ => import('../../page/canvasDemo/drawAudio.vue'),
+				redirect: '',
+
+			},
+			{
+				name: '绘制视频',
 				path: '/canvas/imagelist',
 				component: _ => import('../../page/imagecenter/imageList.vue'),
 				redirect: '',

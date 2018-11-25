@@ -9,7 +9,7 @@
 </div>
 </template>
 <script>
-import { Canvas } from './index.js';
+import { Canvas } from './tool/canvasTool.js';
 export default {
     data() {
         return {

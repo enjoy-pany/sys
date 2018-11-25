@@ -31,7 +31,7 @@ export default {
     overflow: hidden;
     position: relative;
     .view_wrap {
-      width: 100%;
+      width: ~"calc(100% - 200px)";
       height: 100%;
       position: absolute;
       left: 200px;
