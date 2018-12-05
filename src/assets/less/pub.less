@@ -1,0 +1,62 @@
+@import "./var";
+
+html {
+  background-color: @body-background-color;
+  min-width: 1280px;
+}
+
+/* 内容块统一样式 */
+.content-block {
+  background-color: @content-background-color;
+  box-shadow: @content-box-shadow;
+  border-radius: @border-radius;
+  margin-top: @content-margin-top;
+  padding: @content-padding-top-bottom;
+
+  .content-block-title {
+    padding: @content-title-padding;
+    border-bottom: @content-title-border-bottom;
+    display: flex;
+    align-items: center;
+    font-family: @content-font-family;
+    font-size: @content-font-size;
+    color: @content-color;
+
+    & > i {
+      display: inline-block;
+      width: 2px;
+      height: 20px;
+      background-color: @skin-color;
+      margin-right: 9px;
+    }
+  }
+}
+/**自定义的btn**/
+.button-self-defined{
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  background: #F94D26;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 40px;
+  text-align: center;
+};
+
+/* 分页 */
+.page-container {
+  text-align: right;
+  margin: 30px 30px 0;
+}
+
+/***弹出层***/
+.el-dialog__wrapper{
+  .el-dialog{
+    .el-dialog__body{
+      padding: 0 20px;
+      padding-bottom: 30px;
+    }
+  }
+}

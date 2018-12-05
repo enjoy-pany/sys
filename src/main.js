@@ -7,6 +7,13 @@ import store from './store';
 //element-ui
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+//axios
+// import axios from 'axios'
+import { http } from './api/http.js'
+console.log(http)
+Vue.prototype.$http = http
+
+require('@/mock')
 
 Vue.config.productionTip = false
 

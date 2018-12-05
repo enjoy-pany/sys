@@ -199,14 +199,14 @@ const menu = [
 			{
 				name: 'menu抽离及面包屑算法',
 				path: '/collection/imagelist',
-				component: _ => import('../../page/imagecenter/imageList.vue'),
+				component: _ => import('../../page/collection/algorithm_bar.vue'),
 				redirect: '',
 
 			},
 			{
-				name: 'lalala',
-				path: '/collection/imagelist',
-				component: _ => import('../../page/imagecenter/imageList.vue'),
+				name: '常见算法',
+				path: '/collection/algorithmlist',
+				component: _ => import('../../page/collection/algorithmlist.vue'),
 				redirect: '',
 
 			}
