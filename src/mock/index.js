@@ -28,6 +28,7 @@ Mock.mock(/order.list/, 'post', {
   errCode: 1,
   count: 20,
   resultList: [{
+    id: 1,
     groupName: '工会一',
     groupCode: 'XH20081205',
     truename: 'pany',
@@ -37,6 +38,20 @@ Mock.mock(/order.list/, 'post', {
     groupStatusString: '待审核'
   }]
 })
+Mock.mock(/order.list/, 'get', {
+    errCode: 1,
+    count: 20,
+    result: {
+      id: 1,
+      groupName: '工会一',
+      groupCode: 'XH20081205',
+      truename: 'pany',
+      contactPhone: '18330298065',
+      createTime: 1535940167000,
+      groupStatus: 4,
+      groupStatusString: '待审核'
+    }
+  })
 
 Mock.mock(/order.verify/, 'post', {
   errCode: 1,

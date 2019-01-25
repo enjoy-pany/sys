@@ -1,7 +1,7 @@
 <template>
   <div class="unionMain content-block">
     <h1 class="content-block-title">
-      <i></i>公会账号管理
+      <i></i>账号管理
     </h1>
     <div class="unionForm">
       <el-form ref="form" :model="formData" label-width="100px" :inline="true">
@@ -40,6 +40,20 @@
               type="text"
               size="small"
             >审核</el-button>
+            <el-button
+              :disabled="clickLock"
+              v-if="(scope.row.groupStatus==4)"
+              @click.native.prevent="detailUnion(scope.row)"
+              type="text"
+              size="small"
+            >查看</el-button>
+            <el-button
+              :disabled="clickLock"
+              v-if="(scope.row.groupStatus==4)"
+              @click.native.prevent="editUnion(scope.row)"
+              type="text"
+              size="small"
+            >编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -153,6 +167,12 @@ export default {
         checkUnion(item) {
             this.nowUnionId = item.id
             this.dialogVisible = true
+        },
+        detailUnion(item) {
+            this.$router.push({path: '/ordercenter/orderdetail', query: {orderId: item.id}})
+        },
+        editUnion(item) {
+            this.$router.push({path: '/ordercenter/orderedit', query: {orderId: item.id}})
         },
         agreeEnter() {
             this.clickLock = true
