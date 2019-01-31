@@ -20,17 +20,17 @@ export default {
     drag: {
       inserted: function(target) {
         target.onmousedown = function(ev) {
-          let disX = ev.offsetX;
-          let disY = ev.offsetY;
-          document.onmousemove = function(eve) {
-            target.style.left = eve.clientX - disX + 'px';
-            target.style.top = eve.clientY - disY + 'px';
-            //Data.configData.dragData[_index].x = (eve.clientX - disX)/showWidth*100;
-            //Data.configData.dragData[_index].y = (eve.clientY - disY)/showHeight*100;
+          var disX = ev.clientX - target.offsetLeft;
+          var disY = ev.clientY - target.offsetTop;
+          document.onmousemove = function(eve){
+              target.style.left = eve.clientX - disX + 'px';
+              target.style.top = eve.clientY - disY + 'px';
+              //Data.configData.dragData[_index].x = (eve.clientX - disX)/showWidth*100;
+              //Data.configData.dragData[_index].y = (eve.clientY - disY)/showHeight*100;
           }
-          document.onmouseup = function() {
-            document.onmousemove = null;
-            document.onmouseup = null;
+          document.onmouseup = function(){
+              document.onmousemove = null;
+              document.onmouseup = null;
           }
           return false;
         }
