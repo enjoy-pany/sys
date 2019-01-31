@@ -2,7 +2,12 @@
   <div class="seleSearch">
     <input type="text" v-model="seleName" @focus="openSele" @blur.prevent="closeSele">
     <div class="seleList" v-if="isSelect">
-      <div class="seleItem" v-for="(item, index) in jcTypeCom" @click="seleClick(item)">{{item.name}}</div>
+      <div class="seleItem" 
+        v-for="(item, index) in jcTypeCom"
+        :key="index" 
+        @click="seleClick(item)">
+        {{item.name}}
+      </div>
     </div>
   </div>
 

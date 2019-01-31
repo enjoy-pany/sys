@@ -1,7 +1,14 @@
 <template>
-  <div>
-    <h2>Hello, this is select_search review</h2>
-    <selectSearch :dataArr="jcType" @seleChage="seleChageFn"></selectSearch>
+  <div class="content-block">
+    <sub-title>搜索下拉框</sub-title>
+    <div class="view">
+      <selectSearch :dataArr="jcType" @seleChage="seleChageFn"></selectSearch>
+    </div>
+    <sub-title>code-review</sub-title>
+    <div class="codeReview">
+      <my-code>
+      </my-code>
+    </div>
   </div>
 </template>
 
@@ -40,7 +47,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  h2 {
-    text-align: center;
+  .view {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
   }
 </style>

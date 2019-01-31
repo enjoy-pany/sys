@@ -1,8 +1,13 @@
 <template>
-  <div>
-    <h2>Hello, this is drag review</h2>
+  <div class="content-block">
+    <sub-title>拖拽</sub-title>
     <div class="dragWarp">
       <div class="box" v-drag>拖我</div>
+    </div>
+    <sub-title>codeReview</sub-title>
+    <div class="codeReview">
+      <my-code>
+      </my-code>
     </div>
   </div>
 </template>
@@ -47,7 +52,7 @@ h2 {
 }
 .dragWarp {
   width: 100%;
-  height: 100%;
+  height: 400px;
   .box {
     width: 100px;
     height: 100px;

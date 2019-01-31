@@ -19,6 +19,12 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI)
 
+//全局组件
+import myCode from '@/components/Code.vue'
+import subTitle from '@/components/SubTitle.vue'
+Vue.component('myCode', myCode)
+Vue.component('subTitle', subTitle)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

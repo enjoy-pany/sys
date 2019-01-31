@@ -1,8 +1,13 @@
 <template>
-  <div>
-    <h2>Hello, this is drag review</h2>
+  <div class="content-block">
+    <sub-title>自定义右键菜单</sub-title>
     <div class="dragWarp" v-menu>
       右键我？
+    </div>
+    <sub-title>codeReview</sub-title>
+    <div class="codeReview">
+      <my-code>
+      </my-code>
     </div>
   </div>
 </template>

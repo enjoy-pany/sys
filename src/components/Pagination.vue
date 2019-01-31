@@ -3,8 +3,12 @@
     <p>共 {{pages}} 条</p>
     <li @click="prvePage(nowPage)">&lt;</li>
     <div class="pageCon">
-      <li v-for="(pageItem, index) in pageItemCom" :class="{active: nowPage == pageItem}" @click="gotoPage(pageItem, index)">{{pageItem
-        < 1 ? "..." : pageItem}}</li>
+      <li v-for="(pageItem, index) in pageItemCom"
+        :key="index"
+        :class="{active: nowPage == pageItem}" 
+        @click="gotoPage(pageItem, index)">
+        {{pageItem < 1 ? "..." : pageItem}}
+      </li>
     </div>
     <li @click="nextPage(nowPage)">&gt;</li>
   </ul>
