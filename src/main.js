@@ -13,6 +13,23 @@ import { http } from './api/http.js'
 console.log(http)
 Vue.prototype.$http = http
 
+//vue-codemirror
+import VueCodemirror from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/htmlmixed/htmlmixed.js';
+import 'codemirror/theme/base16-light.css'
+Vue.use(VueCodemirror, { 
+  options: { 
+    theme: 'base16-light',
+    tabSize: 4,
+    mode: "htmlmixed",
+    lineNumbers: true,
+    line: true,
+    readOnly: true
+  },
+  // events: ['scroll', ...]
+})
+
 require('@/mock')
 
 Vue.config.productionTip = false

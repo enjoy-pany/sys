@@ -6,8 +6,7 @@
     </div>
     <sub-title>code-review</sub-title>
     <div class="codeReview">
-      <my-code>
-      </my-code>
+       <codemirror v-model="code"></codemirror>
     </div>
   </div>
 </template>
@@ -19,19 +18,20 @@ export default {
   data () {
     return {
       jcType: [
-          {
-            name: 'liming'
-          },
-          {
-            name: 'zhhangsan'
-          },
-          {
-            name: 'lisi'
-          },
-          {
-            name: 'wangwu'
-          }
-        ]
+        {
+          name: 'liming'
+        },
+        {
+          name: 'zhhangsan'
+        },
+        {
+          name: 'lisi'
+        },
+        {
+          name: 'wangwu'
+        }
+      ],
+      code: ''
     }
   },
   components: {
@@ -40,18 +40,27 @@ export default {
   methods: {
     seleChageFn (data) {
       console.log(data)
+    },
+    getComponentsData() {
+      this.$http.fetch('../../static/components/SelectSearch.vue').then(
+        res => {
+          if(res) {
+            this.code = res
+          }
+        },
+        err => {
+          console.log(err)
+        }
+      );
     }
+  },
+  mounted() {
+    this.getComponentsData()
   }
 }
 
 </script>
 
 <style lang="less" scoped>
-  .view {
-    min-height: 100px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    margin-bottom: 24px;
-  }
+  @import url('./view.less');
 </style>
