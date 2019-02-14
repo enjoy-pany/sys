@@ -54,3 +54,8 @@ export default {
 <style lang="less" scoped>
   @import url('./view.less');
 </style>
+<style>
+.CodeMirror {
+  height: 100%;
+}
+</style>
