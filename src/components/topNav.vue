@@ -2,7 +2,7 @@
 <div class="top_nav">
   <el-col :span="24" class="topbar-wrap">
     <div class="topbar-title">
-      <span>后台管理系统</span>
+      <span>SYS</span>
     </div>
     <div class="topbar-account topbar-btn">
       <el-dropdown trigger="click">
