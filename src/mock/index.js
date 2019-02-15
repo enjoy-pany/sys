@@ -46,7 +46,7 @@ Mock.mock(/order.list/, 'get', {
       groupName: '工会一',
       groupCode: 'XH20081205',
       truename: 'pany',
-      contactPhone: '18330298065',
+      contactPhone: '18330293029',
       createTime: 1535940167000,
       groupStatus: 4,
       groupStatusString: '待审核'
