@@ -1,13 +1,13 @@
-const env = location.href.match(/^http:\/\/(\w+).label.37degreedata.com/) || [];
+const env = location.href.match(/^http:\/\/(\w+).sys.com/) || [];
 
-let passportUrl = location.protocol + '//passport.37degreedata.com';
+let passportUrl = location.protocol + '//passport.sys.com';
 
 if (env[1] === 'dev') {
-    passportUrl = 'http://dev.passport.37degreedata.com';
+    passportUrl = 'http://dev.sys.com';
 } else if (env[1] === 'test') {
-    passportUrl = 'http://test.passport.37degreedata.com';
+    passportUrl = 'http://test.sys.com';
 } else if (env[1] === 'pre') {
-    passportUrl = 'http://pre.passport.37degreedata.com';
+    passportUrl = 'http://pre.sys.com';
 }
 
 module.exports = {
