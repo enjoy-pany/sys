@@ -2,13 +2,13 @@
 General system framework for vue
 
 ## Plan
-目录结构
-引入element
-mock
+~~目录结构~~
+~~引入element~~
+~~mock~~
 proxy代理
-api
-vuex
-router
+~~api~~
+~~vuex module~~
+~~router~~
 userinfo
 log/out
 sso
