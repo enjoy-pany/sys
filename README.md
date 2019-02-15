@@ -1,18 +1,21 @@
 # sys
 General system framework for vue
 
-## Plan
-~~目录结构~~
-~~引入element~~
-~~mock~~
-proxy代理
-~~api~~
-~~vuex module~~
-~~router~~
-userinfo
-log/out
-sso
-权限
+## Plan one
+	~~目录结构~~
+	~~引入element~~
+	~~mock~~
+	proxy代理
+	~~api~~
+	~~vuex module~~
+	~~router~~
+	userinfo
+	log/out
+	sso
+	权限
+
+## Plan tow
+	个人中心 用户管理 登陆注册
 
 
 ## Log
