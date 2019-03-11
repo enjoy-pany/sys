@@ -1,9 +1,9 @@
 <template>
 <div class="loginMain">
-    <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2">
-       <el-form-item prop="age">
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
+       <el-form-item prop="name">
             <el-input 
-                v-model.number="ruleForm2.age" 
+                v-model.number="ruleForm.name" 
                 placeholder="请输入用户名"
                 prefix-icon="el-icon-service">
             </el-input>
@@ -11,25 +11,24 @@
         <el-form-item prop="pass">
             <el-input 
                 type="password" 
-                v-model="ruleForm2.pass"
+                v-model="ruleForm.pass"
                 placeholder="请输入密码" 
                 autocomplete="off" 
                 prefix-icon="el-icon-edit">
             </el-input>
         </el-form-item>
-        <el-form-item prop="checkPass">
+        <el-form-item prop="telCode">
             <el-col :span="12">
                 <el-input 
-                    type="password" 
-                    v-model="ruleForm2.checkPass" 
+                    v-model="ruleForm.telCode" 
                     autocomplete="off"
                     prefix-icon="el-icon-mobile-phone">
                 </el-input>
             </el-col>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm2')">登陆</el-button>
-            <el-button @click="resetForm('ruleForm2')">重置</el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')">登陆</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
     </el-form>
 </div>
@@ -37,56 +36,53 @@
 <script>
 export default {
     data() {
-      var checkAge = (rule, value, callback) => {
+      var checkName = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('年龄不能为空'));
+          return callback(new Error('用户名不能为空'));
+        }else {
+          callback()
         }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
+        // setTimeout(() => {
+        //   if (!Number.isInteger(value)) {
+        //     callback(new Error('请输入数字值'));
+        //   } else {
+        //     if (value < 18) {
+        //       callback(new Error('必须年满18岁'));
+        //     } else {
+        //       callback();
+        //     }
+        //   }
+        // }, 1000);
       };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          if (this.ruleForm2.checkPass !== '') {
-            this.$refs.ruleForm2.validateField('checkPass');
-          }
           callback();
         }
       };
-      var validatePass2 = (rule, value, callback) => {
+      var validateTelCode = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm2.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
+          callback(new Error('请输入验证码'));
+        }else {
           callback();
         }
       };
       return {
-        ruleForm2: {
+        ruleForm: {
+          name: '',
           pass: '',
-          checkPass: '',
-          age: ''
+          telCode: ''
         },
-        rules2: {
+        rules: {
           pass: [
             { validator: validatePass, trigger: 'blur' }
           ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
+          telCode: [
+            { validator: validateTelCode, trigger: 'blur' }
           ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
+          name: [
+            { validator: checkName, trigger: 'blur' }
           ]
         }
       };
