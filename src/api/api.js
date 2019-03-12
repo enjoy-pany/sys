@@ -4,5 +4,8 @@ const order = {
   detail: '/order_detail',
   verify: 'order_verify'
 }
-
-export {order}
+const user = {
+  info: '/user_info',
+  login: '/user_login'
+}
+export {order, user}

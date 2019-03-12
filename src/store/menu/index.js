@@ -9,6 +9,14 @@ const menu = [
 		redirect: '',
 	},
 	{
+		name: '登陆',
+		path: '/login',
+		meta: {
+			icon: ''
+		},
+		component: _=> import('@/page/userCenter/login')
+	},
+	{
 		name: '工单中心',
 		path: '/ordercenter',
 		meta: {

@@ -23,10 +23,30 @@
 </div>
 </template>
 <script>
+import {user} from '@/api/api.js'
 export default {
   data() {
     return {
       nickname: 'administrator'
+    }
+  },
+  mounted() {
+    this.getUserInfo()
+  },
+  methods: {
+    getUserInfo() {
+      this.$http.fetch(user.info)
+      .then(res => {
+          console.log(res)
+          if(res.errCode == 1) {
+            console.log('成功')
+            this.nickname = res.result.userName
+          }else {
+            this.$message.error(res.errMess)
+          }
+      }, err=> {
+          this.$message.error('服务器错误')
+      });
     }
   }
 }
