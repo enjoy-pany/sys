@@ -1,13 +1,11 @@
 <template>
   <div class="wrap_body">
-      <div class="mainCon">
-        <top-nav></top-nav>
-        <left-nav></left-nav>
-        <div class="view_wrap">
-            <levelbar></levelbar>
-            <router-view></router-view>
-        </div>
-      </div>
+    <top-nav></top-nav>
+    <left-nav></left-nav>
+    <div class="view_wrap">
+        <levelbar></levelbar>
+        <router-view></router-view>
+    </div>
   </div>
 </template>
 <script>
