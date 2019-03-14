@@ -31,16 +31,14 @@ export default {
     height: 100%;
     overflow: hidden;
     position: relative;
-    .mainCon {
-      .view_wrap {
-        width: ~"calc(100% - 200px)";
-        height: 100%;
-        position: absolute;
-        left: 200px;
-        top: 50px;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-    }   
+    .view_wrap {
+      width: ~"calc(100% - 200px)";
+      height: 100%;
+      position: absolute;
+      left: 200px;
+      top: 50px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
   }
 </style>
