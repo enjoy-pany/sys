@@ -2,7 +2,7 @@
 <div class="top_nav">
   <el-col :span="24" class="topbar-wrap">
     <div class="topbar-title">
-      <span>SYS</span>
+      <div class="logo"><img src="../assets/images/logo.png" alt=""></div>
     </div>
     <div class="topbar-account topbar-btn">
       <el-dropdown trigger="click">
@@ -68,9 +68,12 @@ export default {
       color: #fff;
     }
     .topbar-title {
-      span {
-        font-size: 18px;
-        color: #fff;
+      .logo {
+        img {
+          width: auto;
+          height: 50px;
+          display: block;
+        }
       }
     }
     .topbar-account {
