@@ -4,23 +4,26 @@
       @open="handleOpen"
       @close="handleClose">
       <template v-for="(item, index) in menus">
-        <el-menu-item v-if="!item.children" :index="`${index}`" :key="item.name" @click="goPath(item.path)">
-            <i :class="item.meta.icon"></i>
-            <span slot="title">{{item.name }}</span>
-        </el-menu-item>
-        <el-submenu v-else :key="index" :index="`${index}`">
-          <template slot="title">
-            <i :class="item.meta.icon"></i>
-            <span>{{item.name}}</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item 
-              v-for="(mItem, mIndex) in item.children" 
-              :index="`${index}-${mIndex}`"
-              :key="mItem.name"
-              @click="goPath(mItem.path)">{{mItem.name}}</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+        <div class="menuList" :key="item.name" v-show="!item.disabled">
+          <el-menu-item v-if="!item.children" :index="`${index}`" @click="goPath(item.path)">
+              <i :class="item.meta.icon"></i>
+              <span slot="title">{{item.name }}</span>
+          </el-menu-item>
+          <el-submenu v-else :key="index" :index="`${index}`">
+            <template slot="title">
+              <i :class="item.meta.icon"></i>
+              <span>{{item.name}}</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item 
+                v-for="(mItem, mIndex) in item.children" 
+                :index="`${index}-${mIndex}`"
+                :key="mItem.name"
+                @click="goPath(mItem.path)">{{mItem.name}}</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </div>
+        
       </template>
     </el-menu>
   </el-aside>

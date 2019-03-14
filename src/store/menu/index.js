@@ -11,6 +11,7 @@ const menu = [
 	{
 		name: '登陆',
 		path: '/login',
+		disabled: true,
 		meta: {
 			icon: ''
 		},
