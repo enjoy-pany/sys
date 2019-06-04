@@ -42,7 +42,7 @@ export default {
       console.log(data)
     },
     getComponentsData() {
-      this.$http.fetch('../../static/components/SelectSearch.vue').then(
+      this.$http.fetch('./static/components/SelectSearch.vue').then(
         res => {
           if(res) {
             this.code = res

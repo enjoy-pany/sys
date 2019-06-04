@@ -33,7 +33,7 @@ export default {
       console.log(data)
     },
     getComponentsData() {
-      this.$http.fetch('../../static/components/Pagination.vue').then(
+      this.$http.fetch('./static/components/Pagination.vue').then(
         res => {
           if(res) {
             this.code = res

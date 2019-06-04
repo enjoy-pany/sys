@@ -33,7 +33,7 @@ export default {
       this.isOpen = true;
     },
     getComponentsData() {
-      this.$http.fetch('../../static/components/Alert.vue').then(
+      this.$http.fetch('./static/components/Alert.vue').then(
         res => {
           if(res) {
             this.code = res
