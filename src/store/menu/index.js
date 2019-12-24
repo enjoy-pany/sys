@@ -1,10 +1,11 @@
+const wrapIndex = _ => import('@/page/index')
 const menu = [{
     name: '首页',
     path: '/',
     meta: {
       icon: 'el-icon-menu'
     },
-    component: _ => import('@/page/main.vue'),
+    component: wrapIndex,
     redirect: '',
   },
   {
@@ -22,7 +23,7 @@ const menu = [{
     meta: {
       icon: 'el-icon-magic-stick'
     },
-    component: _ => import('@/page/main.vue'),
+    component: wrapIndex,
     redirect: '',
     children: [{
         name: '表单模型',
@@ -38,7 +39,7 @@ const menu = [{
     meta: {
       icon: 'el-icon-tickets'
     },
-    component: _ => import('@/page/main.vue'),
+    component: wrapIndex,
     redirect: '',
     children: [{
         name: '工单列表',
@@ -67,7 +68,7 @@ const menu = [{
     meta: {
       icon: 'el-icon-picture'
     },
-    component: _ => import('@/page/main.vue'),
+    component: wrapIndex,
     redirect: '',
     children: [{
         name: '图片列表',
@@ -92,7 +93,7 @@ const menu = [{
     meta: {
       icon: 'el-icon-news'
     },
-    component: _ => import('@/page/main.vue'),
+    component: wrapIndex,
     redirect: '',
     children: [{
         name: '音频大世界',
@@ -124,7 +125,7 @@ const menu = [{
     meta: {
       icon: 'el-icon-edit'
     },
-    component: _ => import('@/page/main.vue'),
+    component: wrapIndex,
     redirect: '',
     children: [{
         name: '图形绘制与命中检测',
@@ -163,7 +164,7 @@ const menu = [{
     meta: {
       icon: 'el-icon-goods'
     },
-    component: _ => import('@/page/main.vue'),
+    component: wrapIndex,
     redirect: '',
     children: [{
         path: '/component/pagination',
@@ -214,7 +215,7 @@ const menu = [{
     meta: {
       icon: 'el-icon-star-off'
     },
-    component: _ => import('@/page/main.vue'),
+    component: wrapIndex,
     redirect: '',
     children: [{
         name: 'menu抽离及面包屑算法',
