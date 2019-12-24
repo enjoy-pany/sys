@@ -57,9 +57,11 @@ export default {
 </script>
 <style lang="less" scoped>
   .navLeft {
-    height: 100%;
+    min-height: calc(100vh - 100px);
     background-color: rgb(238, 241, 246);
+    margin-right: 10px;
     ul {
+      width: 200px;
       height: 100%;
     }
   }

@@ -1,17 +1,17 @@
 <template>
   <div class="wrap_body">
     <top-nav></top-nav>
-    <left-nav></left-nav>
     <div class="view_wrap">
-        <levelbar></levelbar>
-        <router-view></router-view>
+        <left-nav></left-nav>
+        <div class="view_main">
+          <router-view></router-view>
+        </div>
     </div>
   </div>
 </template>
 <script>
 import leftNav from '../components/leftNav.vue'
 import topNav from '../components/topNav.vue'
-import levelbar from '@/components/levelbar'
 
 export default {
   data() {
@@ -20,7 +20,6 @@ export default {
   components: {
     leftNav,
     topNav,
-    levelbar
   }
 }
 </script>
@@ -29,16 +28,19 @@ export default {
   .wrap_body {
     width: 100%;
     height: 100%;
+    background: #eff0f4;
     overflow: hidden;
     position: relative;
     .view_wrap {
-      width: ~"calc(100% - 200px)";
-      height: 100%;
-      position: absolute;
-      left: 200px;
-      top: 50px;
-      padding: 20px;
-      box-sizing: border-box;
+      display: flex;
+      width: 1280px;
+      height: calc(~"100vh - 60px");
+      margin: 20px auto 0;
+      padding-bottom: 20px;
+      .view_main {
+        display: flex;
+        width: 100%;
+      }
     }
   }
 </style>

@@ -53,9 +53,11 @@ export default {
 </script>
 <style lang="less" scoped>
 .top_nav {
+  width: 100%;
+  height: 50px;
   .topbar-wrap {
     width: 100%;
-    height: 50px;
+    height: 100%;
     line-height: 50px;
     background: #373d41;
     padding: 0px 20px;

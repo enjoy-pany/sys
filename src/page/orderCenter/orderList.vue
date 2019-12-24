@@ -214,6 +214,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .unionMain {
+  width: 100%;
   .unionForm {
     margin-top: 20px;
   }
