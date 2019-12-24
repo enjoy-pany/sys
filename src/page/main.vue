@@ -4,14 +4,16 @@
     <div class="view_wrap">
         <left-nav></left-nav>
         <div class="view_main">
+          <level-bar></level-bar>
           <router-view></router-view>
         </div>
     </div>
   </div>
 </template>
 <script>
-import leftNav from '../components/leftNav.vue'
-import topNav from '../components/topNav.vue'
+import leftNav from '@/components/LeftNav.vue'
+import topNav from '@/components/TopNav.vue'
+import levelBar from '@/components/LevelBar.vue'
 
 export default {
   data() {
@@ -20,6 +22,7 @@ export default {
   components: {
     leftNav,
     topNav,
+    levelBar
   }
 }
 </script>
@@ -39,6 +42,7 @@ export default {
       padding-bottom: 20px;
       .view_main {
         display: flex;
+        flex-direction: column;
         width: 100%;
       }
     }

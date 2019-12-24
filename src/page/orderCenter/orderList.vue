@@ -1,8 +1,6 @@
 <template>
   <div class="unionMain content-block">
-    <h1 class="content-block-title">
-      <i></i>账号管理
-    </h1>
+    <sub-title>账号管理</sub-title>
     <div class="unionForm">
       <el-form ref="form" :model="formData" label-width="100px" :inline="true">
         <el-form-item label="公会状态:">
@@ -81,136 +79,159 @@
   </div>
 </template>
 <script>
-import {order} from '@/api/api.js'
-
-const tableMap = [{
-    prop: 'groupName',
-    label: '公会名称',
-    width: ''
-},{
-    prop: 'groupCode',
-    label: '组织代码',
-    width: ''
-},{
-    prop: 'truename',
-    label: '真实姓名',
-    width: ''
-},{
-    prop: 'contactPhone',
-    label: '手机号',
-    width: ''
-},{
-    prop: 'createTime',
-    label: '注册时间',
-    width: ''
-},{
-    prop: 'groupStatusString',
-    label: '公会状态',
-    width: ''
-}]
+import { order } from "@/api/api.js";
+import subTitle from "@/components/SubTitle.vue"
+const tableMap = [
+  {
+    prop: "groupName",
+    label: "公会名称",
+    width: ""
+  },
+  {
+    prop: "groupCode",
+    label: "组织代码",
+    width: ""
+  },
+  {
+    prop: "truename",
+    label: "真实姓名",
+    width: ""
+  },
+  {
+    prop: "contactPhone",
+    label: "手机号",
+    width: ""
+  },
+  {
+    prop: "createTime",
+    label: "注册时间",
+    width: ""
+  },
+  {
+    prop: "groupStatusString",
+    label: "公会状态",
+    width: ""
+  }
+];
 export default {
-    data() {
-        return {
-            formData: {
-                name: '',
-                status: []
-            },
-            cloneFormData: {
-                name: '',
-                status: []
-            },
-            tableData: [],
-            tableMap,
-            pagination: {
-                total: 0,
-                pageSize: 10,
-                currentPage: 1
-            },
-            nowUnionId: null,//当前审核工会id
-            dialogVisible: false,
-            agreeRadio: '1',
-            loading: false,
-            clickLock: true
+  components: {
+    subTitle
+  },
+  data() {
+    return {
+      formData: {
+        name: "",
+        status: []
+      },
+      cloneFormData: {
+        name: "",
+        status: []
+      },
+      tableData: [],
+      tableMap,
+      pagination: {
+        total: 0,
+        pageSize: 10,
+        currentPage: 1
+      },
+      nowUnionId: null, //当前审核工会id
+      dialogVisible: false,
+      agreeRadio: "1",
+      loading: false,
+      clickLock: true
+    };
+  },
+  methods: {
+    getTabelData(formType) {
+      this.clickLock = true;
+      this.loading = true;
+      const param = {
+        groupName: this[formType].name,
+        groupStatus: this[formType].status,
+        pageNum: this.pagination.currentPage,
+        pageSize: this.pagination.pageSize
+      };
+      this.$http.post(order.list, param).then(
+        res => {
+          console.log(res);
+          this.clickLock = false;
+          this.loading = false;
+          this.tableData = res.resultList;
+          this.pagination.total = res.count;
+        },
+        err => {
+          this.clickLock = false;
+          this.loading = false;
         }
+      );
     },
-    methods: {
-        getTabelData(formType) {
-            this.clickLock = true
-            this.loading = true
-            const param = {
-                groupName: this[formType].name,
-                groupStatus: this[formType].status,
-                pageNum: this.pagination.currentPage,
-                pageSize: this.pagination.pageSize
-            }
-            this.$http.post(order.list,param)
-            .then(res => {
-              console.log(res)
-                this.clickLock = false
-                this.loading = false
-                this.tableData = res.resultList
-                this.pagination.total = res.count
-            }, err=> {
-                this.clickLock = false
-                this.loading = false
-            });
-        },
-        search() {
-            this.pagination.currentPage = 1;
-            this.getTabelData('formData')
-            this.cloneFormData = JSON.parse(JSON.stringify(this.formData))
-        },
-        handleCurrentChange(val) {
-            this.pagination.currentPage = val
-            this.getTabelData('cloneFormData')
-        },
-        checkUnion(item) {
-            this.nowUnionId = item.id
-            this.dialogVisible = true
-        },
-        detailUnion(item) {
-            this.$router.push({path: '/ordercenter/orderdetail', query: {orderId: item.id}})
-        },
-        editUnion(item) {
-            this.$router.push({path: '/ordercenter/orderedit', query: {orderId: item.id}})
-        },
-        agreeEnter() {
-            this.clickLock = true
-            const param = {
-                id: this.nowUnionId,
-                result: this.agreeRadio
-            }
-            this.$http.post(order.verify,param)
-            .then(res => {
-                this.clickLock = false
-                this.$message.success('操作成功')
-                this.getTabelData('cloneFormData')
-                this.handleClose()
-            , err=> {
-                this.clickLock = false
-            }})
-        },
-        handleClose() {
-            this.dialogVisible = false
-        },
-        formatData(row,column,current,index) {
-            if(row.createTime == current) {
-                const date = new Date(current);
-                const year = date.getFullYear();
-                const month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
-                const day = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`;
-                const h = date.getHours() > 9 ?date.getHours() : `0${date.getHours()}`;
-                const m = date.getMinutes() > 9 ?date.getMinutes() : `0${date.getMinutes()}`;
-                const s = date.getSeconds() > 9 ? date.getSeconds() : `0${date.getSeconds()}`;
-                return `${year}-${month}-${day} ${h}:${m}:${s}`;
-            }
-            return current;
-        }
+    search() {
+      this.pagination.currentPage = 1;
+      this.getTabelData("formData");
+      this.cloneFormData = JSON.parse(JSON.stringify(this.formData));
     },
-    created() {
-        this.getTabelData('formData')
+    handleCurrentChange(val) {
+      this.pagination.currentPage = val;
+      this.getTabelData("cloneFormData");
+    },
+    checkUnion(item) {
+      this.nowUnionId = item.id;
+      this.dialogVisible = true;
+    },
+    detailUnion(item) {
+      this.$router.push({
+        path: "/ordercenter/orderdetail",
+        query: { orderId: item.id }
+      });
+    },
+    editUnion(item) {
+      this.$router.push({
+        path: "/ordercenter/orderedit",
+        query: { orderId: item.id }
+      });
+    },
+    agreeEnter() {
+      this.clickLock = true;
+      const param = {
+        id: this.nowUnionId,
+        result: this.agreeRadio
+      };
+      this.$http.post(order.verify, param).then(res => {
+        this.clickLock = false;
+        this.$message.success("操作成功");
+        this.getTabelData("cloneFormData");
+        this.handleClose(),
+          err => {
+            this.clickLock = false;
+          };
+      });
+    },
+    handleClose() {
+      this.dialogVisible = false;
+    },
+    formatData(row, column, current, index) {
+      if (row.createTime == current) {
+        const date = new Date(current);
+        const year = date.getFullYear();
+        const month =
+          date.getMonth() + 1 > 9
+            ? date.getMonth() + 1
+            : `0${date.getMonth() + 1}`;
+        const day = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`;
+        const h = date.getHours() > 9 ? date.getHours() : `0${date.getHours()}`;
+        const m =
+          date.getMinutes() > 9 ? date.getMinutes() : `0${date.getMinutes()}`;
+        const s =
+          date.getSeconds() > 9 ? date.getSeconds() : `0${date.getSeconds()}`;
+        return `${year}-${month}-${day} ${h}:${m}:${s}`;
+      }
+      return current;
     }
-}
+  },
+  created() {
+    this.getTabelData("formData");
+  }
+};
 </script>
 <style lang="less" scoped>
 .unionMain {
