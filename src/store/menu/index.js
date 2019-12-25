@@ -30,6 +30,12 @@ const menu = [{
         path: '/formcenter/formRender',
         component: _ => import('@/page/formCenter/formRender.vue'),
         redirect: ''
+      },
+      {
+        name: '列表模型',
+        path: '/formcenter/listRender',
+        component: _ => import('@/page/formCenter/listRender.vue'),
+        redirect: ''
       }
     ]
   },

@@ -1,8 +1,6 @@
 <template>
   <el-aside width="200px" class="navLeft">
-    <el-menu
-      @open="handleOpen"
-      @close="handleClose">
+    <el-menu :default-active="activeIndex">
       <template v-for="(item, index) in menus">
         <div class="menuList" :key="item.name" v-show="!item.disabled">
           <el-menu-item v-if="!item.children" :index="`${index}`" @click="goPath(item.path)">
@@ -36,12 +34,6 @@ export default {
    }
  },
  methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
     goPath(path) {
       this.$router.push({
         path
@@ -51,7 +43,26 @@ export default {
   computed: {
       ...mapState({
           menus: state => state.menus.menuData
-      })
+      }),
+      activeIndex() {
+        let index = '0'
+        let toPath = location.pathname
+        console.log(location)
+        for (let i = 0; i < this.menus.length; i++) {
+          if (toPath.search(this.menus[i].path) !== -1) {
+            index = `${i}`
+          }
+          if(this.menus[i].children && this.menus[i].children.length>0) {
+            for (let j = 0; j < this.menus[i].children.length; j++) {
+              if (toPath.search(this.menus[i].children[j].path) !== -1) {
+                index = `${i}-${j}`
+              }
+            }
+          }
+        }
+        console.log(index)
+        return index
+      }
   },
 }
 </script>

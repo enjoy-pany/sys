@@ -6,5 +6,6 @@ import menus from '../store/menu/index.js';
 Vue.use(Router)
 
 export default new Router({
-  routes: menus.state.menuData
+  routes: menus.state.menuData,
+  mode: 'history'
 })
