@@ -25,7 +25,14 @@ const menu = [{
     },
     component: wrapIndex,
     redirect: '',
-    children: [{
+    children: [
+      {
+        name: '工作台',
+        path: '/formcenter/workBench',
+        component: _ => import('@/page/formCenter/workBench.vue'),
+        redirect: ''
+      },
+      {
         name: '表单模型',
         path: '/formcenter/formRender',
         component: _ => import('@/page/formCenter/formRender.vue'),
