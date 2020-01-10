@@ -2,18 +2,23 @@
   <div class="benchWrap">
     <div class="toolBar">
       <el-form size="small" label-width="70px">
-        <draggable v-model="formModel" :group="{ name: 'form', pull: 'clone', put: false}">
+        <draggable
+          v-model="formModel"
+          :group="{ name: 'form', pull: 'clone', put: false}"
+          :clone="cloneDog"
+        >
           <el-form-item v-for="(item, index) in formModel" :key="index" :label="item.label">
             <div class="formItem" v-if="item.type === 1">
-              <el-input  v-model="item.value"></el-input>
+              <el-input v-model="item.value"></el-input>
             </div>
             <div class="formItem" v-if="item.type === 2">
               <el-select v-model="item.value">
-                <el-option 
-                  v-for="(fItem, fIndex) in item.options" 
-                  :key="fIndex" 
-                  :label="fItem.label" 
-                  :value="fItem.value"></el-option>
+                <el-option
+                  v-for="(fItem, fIndex) in item.options"
+                  :key="fIndex"
+                  :label="fItem.label"
+                  :value="fItem.value"
+                ></el-option>
               </el-select>
             </div>
             <div class="formItem" v-if="item.type === 3">
@@ -25,23 +30,25 @@
             <div class="formItem" v-if="item.type === 5">
               <el-checkbox-group v-model="item.value">
                 <el-checkbox
-                  v-for="(fItem, fIndex) in item.options" 
-                  :key="fIndex" 
-                  :label="fItem.label" 
-                  :value="fItem.value"></el-checkbox>
+                  v-for="(fItem, fIndex) in item.options"
+                  :key="fIndex"
+                  :label="fItem.label"
+                  :value="fItem.value"
+                ></el-checkbox>
               </el-checkbox-group>
             </div>
             <div class="formItem" v-if="item.type === 6">
               <el-radio-group v-model="item.value">
-                <el-radio 
-                  v-for="(fItem, fIndex) in item.options" 
-                  :key="fIndex" 
-                  :label="fItem.label" 
-                  :value="fItem.value"></el-radio>
+                <el-radio
+                  v-for="(fItem, fIndex) in item.options"
+                  :key="fIndex"
+                  :label="fItem.label"
+                  :value="fItem.value"
+                ></el-radio>
               </el-radio-group>
             </div>
             <div class="formItem" v-if="item.type === 7">
-              <el-input type="textarea"  v-model="item.value"></el-input>
+              <el-input type="textarea" v-model="item.value"></el-input>
             </div>
           </el-form-item>
         </draggable>
@@ -51,17 +58,18 @@
       <el-form ref="formData" label-width="80px">
         <div v-if="formData.length<=0" class="blankTip">将表单组件拖到这里</div>
         <draggable v-model="formData" group="form" class="dragWrap">
-          <el-form-item v-for="(item, index) in formData" :key="index" :label="item.label">
+          <el-form-item v-for="(item, index) in formData" :key="index" :label="item.name">
             <div class="formItem" v-if="item.type === 1">
-              <el-input  v-model="item.value"></el-input>
+              <el-input v-model="item.value" :placeholder="item.config.placeholder"></el-input>
             </div>
             <div class="formItem" v-if="item.type === 2">
               <el-select v-model="item.value">
-                <el-option 
-                  v-for="(fItem, fIndex) in item.options" 
-                  :key="fIndex" 
-                  :label="fItem.label" 
-                  :value="fItem.value"></el-option>
+                <el-option
+                  v-for="(fItem, fIndex) in item.options"
+                  :key="fIndex"
+                  :label="fItem.label"
+                  :value="fItem.value"
+                ></el-option>
               </el-select>
             </div>
             <div class="formItem" v-if="item.type === 3">
@@ -73,26 +81,28 @@
             <div class="formItem" v-if="item.type === 5">
               <el-checkbox-group v-model="item.value">
                 <el-checkbox
-                  v-for="(fItem, fIndex) in item.options" 
-                  :key="fIndex" 
-                  :label="fItem.label" 
-                  :value="fItem.value"></el-checkbox>
+                  v-for="(fItem, fIndex) in item.options"
+                  :key="fIndex"
+                  :label="fItem.label"
+                  :value="fItem.value"
+                ></el-checkbox>
               </el-checkbox-group>
             </div>
             <div class="formItem" v-if="item.type === 6">
               <el-radio-group v-model="item.value">
-                <el-radio 
-                  v-for="(fItem, fIndex) in item.options" 
-                  :key="fIndex" 
-                  :label="fItem.label" 
-                  :value="fItem.value"></el-radio>
+                <el-radio
+                  v-for="(fItem, fIndex) in item.options"
+                  :key="fIndex"
+                  :label="fItem.label"
+                  :value="fItem.value"
+                ></el-radio>
               </el-radio-group>
             </div>
             <div class="formItem" v-if="item.type === 7">
-              <el-input type="textarea"  v-model="item.value"></el-input>
+              <el-input type="textarea" v-model="item.value"></el-input>
             </div>
             <div class="formItemTools">
-              <span class="formIcon el-icon-s-tools"></span>
+              <span class="formIcon el-icon-s-tools" @click="editFormConfig(item)"></span>
               <span class="formIcon el-icon-minus"></span>
             </div>
           </el-form-item>
@@ -103,89 +113,189 @@
         </el-form-item>
       </el-form>
     </div>
+    <div class="eidtDialog">
+      <el-dialog title="设置" :visible.sync="dialogFormVisible">
+        <el-form :model="formConfig">
+          <el-form-item label="字段名称" label-width="120px">
+            <el-input v-model="formConfig.name"></el-input>
+          </el-form-item>
+          <el-form-item label="键值" label-width="120px">
+            <el-input v-model="formConfig.key"></el-input>
+          </el-form-item>
+          <el-form-item label="默认值" label-width="120px">
+            <el-input v-model="formConfig.config.defaultValue"></el-input>
+          </el-form-item>
+          <el-form-item label="是否必填" label-width="120px">
+            <el-checkbox v-model="formConfig.verify.isRequire">必填</el-checkbox>
+          </el-form-item>
+          <el-form-item label="placeholder" label-width="120px">
+            <el-input v-model="formConfig.config.placeholder"></el-input>
+          </el-form-item>
+          <el-form-item label="tips" label-width="120px">
+            <el-input v-model="formConfig.config.tips"></el-input>
+          </el-form-item>
+          <el-form-item label="校验规则" label-width="120px">
+            <el-input v-model="formConfig.name"></el-input>
+          </el-form-item>
+          <el-form-item label="关联" label-width="120px">
+            <el-input v-model="formConfig.name"></el-input>
+          </el-form-item>
+        </el-form>
+        <!-- <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="saveConfig">确 定</el-button>
+        </div>-->
+      </el-dialog>
+    </div>
   </div>
 </template>
 <script>
-import draggable from 'vuedraggable'
+import draggable from "vuedraggable";
 export default {
   components: {
     draggable
   },
   data() {
     return {
+      dialogFormVisible: false,
       formModel: [
         {
           type: 1,
-          label: '输入框',
-          value: ''
+          label: "输入框", //label
+          key: ""
         },
         {
           type: 2,
-          label: '下拉框',
+          label: "下拉框",
           value: [],
           options: [
             {
-              label: '选项一',
+              label: "选项一",
               value: 1
             },
             {
-              label: '选项二',
+              label: "选项二",
               value: 2
             }
           ]
         },
         {
           type: 3,
-          label: '时间选择',
-          value: ''
+          label: "时间选择",
+          value: ""
         },
         {
           type: 4,
-          label: '开关',
+          label: "开关",
           value: false
         },
         {
           type: 5,
-          label: '多选',
+          label: "多选",
           value: [],
           options: [
             {
-              label: '选项一',
+              label: "选项一",
               value: 1
             },
             {
-              label: '选项二',
+              label: "选项二",
               value: 2
             }
           ]
         },
         {
           type: 6,
-          label: '单选',
+          label: "单选",
           value: 1,
           options: [
             {
-              label: '选项一',
+              label: "选项一",
               value: 1
             },
             {
-              label: '选项二',
+              label: "选项二",
               value: 2
             }
           ]
         },
         {
           type: 7,
-          label: '文本域',
-          value: ''
+          label: "文本域",
+          value: ""
         }
       ],
-      formData: []
-    }
+      formData: [],
+      formConfig: {
+        type: null,
+        name: "",
+        key: "",
+        value: null,
+        options: [],
+        // 基础配置
+        config: {
+          defaultValue: "",
+          placeholder: "",
+          tips: ""
+        },
+        // 校验
+        verify: {
+          isRequire: true,
+          message: "",
+          rules: [
+            {
+              validator: (rule, value, callback) => {
+                console.log(value);
+                callback();
+              },
+              trigger: ""
+            }
+          ]
+        }
+      }
+    };
   },
   methods: {
+    cloneDog(obj) {
+      switch (obj.type) {
+        case 1:
+          return {
+            type: 1,
+            name: "输入框", //label
+            key: "",
+            value: null,
+            options: [],
+            // 基础配置
+            config: {
+              defaultValue: "",
+              placeholder: "",
+              tips: ""
+            },
+            // 校验
+            verify: {
+              isRequire: true,
+              message: "请填写活动名称",
+              rules: [
+                {
+                  validator: (rule, value, callback) => {
+                    console.log(value);
+                    callback();
+                  },
+                  trigger: ""
+                }
+              ]
+            }
+          };
+        default:
+          break;
+      }
+    },
+    editFormConfig(item) {
+      this.dialogFormVisible = true;
+      this.formConfig = item;
+    },
     onSubmit() {
-      console.log('submit!', this.formData);
+      console.log("submit!", this.formData);
     }
   }
 };
@@ -243,15 +353,14 @@ export default {
   margin-bottom: 20px;
 }
 .blankTip {
-    width: 100%;
-    height: 300px;
-    position: absolute;
-    border: 1px #DCDFE6 dashed;
-    border-radius: 10px;
-    font-size: 22px;
-    color: #DCDFE6;
-    text-align: center;
-    line-height: 300px;
-  }
-
+  width: 100%;
+  height: 300px;
+  position: absolute;
+  border: 1px #dcdfe6 dashed;
+  border-radius: 10px;
+  font-size: 22px;
+  color: #dcdfe6;
+  text-align: center;
+  line-height: 300px;
+}
 </style>
