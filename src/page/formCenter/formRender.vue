@@ -45,7 +45,6 @@
             options: [],
             // 基础配置
             config: {
-              defaultValue: '',
               placeholder: '请输入活动名称',
               tips: ''
             },
@@ -76,7 +75,6 @@
             options: [],
             // 基础配置
             config: {
-              defaultValue: '',
               placeholder: '请输入活动开始时间',
               tips: '',
               disabled() {
@@ -114,7 +112,6 @@
             options: [],
             // 基础配置
             config: {
-              defaultValue: '',
               placeholder: '请输入活动结束时间',
               tips: '',
               disabled() {

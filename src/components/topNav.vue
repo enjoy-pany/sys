@@ -2,7 +2,7 @@
 <div class="top_nav">
   <el-col :span="24" class="topbar-wrap">
     <div class="topbar-title">
-      <div class="logo"><img src="../assets/images/logo.png" alt=""></div>
+      <!-- <div class="logo"><img src="../assets/images/logo.png" alt=""></div> -->
     </div>
     <div class="topbar-account topbar-btn">
       <el-dropdown trigger="click">

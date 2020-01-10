@@ -5,8 +5,7 @@
         <draggable
           v-model="formModel"
           :group="{ name: 'form', pull: 'clone', put: false}"
-          :clone="cloneDog"
-        >
+          :clone="cloneDog">
           <el-form-item v-for="(item, index) in formModel" :key="index" :label="item.label">
             <div class="formItem" v-if="item.type === 1">
               <el-input v-model="item.value"></el-input>
@@ -55,7 +54,7 @@
       </el-form>
     </div>
     <div class="bench">
-      <el-form ref="formData" label-width="80px">
+      <el-form ref="formData" label-width="120px">
         <div v-if="formData.length<=0" class="blankTip">将表单组件拖到这里</div>
         <draggable v-model="formData" group="form" class="dragWrap">
           <el-form-item v-for="(item, index) in formData" :key="index" :label="item.name">
@@ -114,37 +113,51 @@
       </el-form>
     </div>
     <div class="eidtDialog">
-      <el-dialog title="设置" :visible.sync="dialogFormVisible">
-        <el-form :model="formConfig">
-          <el-form-item label="字段名称" label-width="120px">
+      <el-dialog title="设置" :visible.sync="dialogFormVisible" width="600px">
+        <el-form :model="formConfig" label-width="120px">
+          <el-form-item label="字段名称">
             <el-input v-model="formConfig.name"></el-input>
           </el-form-item>
-          <el-form-item label="键值" label-width="120px">
+          <el-form-item label="键值">
             <el-input v-model="formConfig.key"></el-input>
           </el-form-item>
-          <el-form-item label="默认值" label-width="120px">
-            <el-input v-model="formConfig.config.defaultValue"></el-input>
+          <el-form-item label="默认值">
+            <el-input v-model="formConfig.value"></el-input>
           </el-form-item>
-          <el-form-item label="是否必填" label-width="120px">
+          <el-form-item label="options" v-if="formConfig.options.length>0">
+            <el-row v-for="(item, index) in formConfig.options" :key="index">
+              <el-col :span="10">
+                <el-form-item label="label" label-width="60px">
+                  <el-input v-model="item.label" size="mini"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="10">
+                <el-form-item label="value" label-width="60px">
+                  <el-input v-model="item.value" size="mini"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="2" style="margin-left: 10px">
+                <span class="el-icon-circle-plus-outline"></span>
+                <span class="el-icon-remove-outline"></span>
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="是否必填">
             <el-checkbox v-model="formConfig.verify.isRequire">必填</el-checkbox>
           </el-form-item>
-          <el-form-item label="placeholder" label-width="120px">
+          <el-form-item label="placeholder">
             <el-input v-model="formConfig.config.placeholder"></el-input>
           </el-form-item>
-          <el-form-item label="tips" label-width="120px">
+          <el-form-item label="tips">
             <el-input v-model="formConfig.config.tips"></el-input>
           </el-form-item>
-          <el-form-item label="校验规则" label-width="120px">
+          <el-form-item label="校验规则">
             <el-input v-model="formConfig.name"></el-input>
           </el-form-item>
-          <el-form-item label="关联" label-width="120px">
+          <el-form-item label="关联">
             <el-input v-model="formConfig.name"></el-input>
           </el-form-item>
         </el-form>
-        <!-- <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saveConfig">确 定</el-button>
-        </div>-->
       </el-dialog>
     </div>
   </div>
@@ -234,7 +247,6 @@ export default {
         options: [],
         // 基础配置
         config: {
-          defaultValue: "",
           placeholder: "",
           tips: ""
         },
@@ -256,38 +268,35 @@ export default {
     };
   },
   methods: {
+    deepCopy(obj) {
+      return JSON.parse(JSON.stringify(obj))
+    },
     cloneDog(obj) {
-      switch (obj.type) {
-        case 1:
-          return {
-            type: 1,
-            name: "输入框", //label
-            key: "",
-            value: null,
-            options: [],
-            // 基础配置
-            config: {
-              defaultValue: "",
-              placeholder: "",
-              tips: ""
-            },
-            // 校验
-            verify: {
-              isRequire: true,
-              message: "请填写活动名称",
-              rules: [
-                {
-                  validator: (rule, value, callback) => {
-                    console.log(value);
-                    callback();
-                  },
-                  trigger: ""
-                }
-              ]
+      return {
+        type: obj.type,
+        name: obj.label, //label
+        value: obj.value,
+        key: "",
+        options: obj.options?this.deepCopy(obj.options):[],
+        // 基础配置
+        config: {
+          placeholder: "",
+          tips: ""
+        },
+        // 校验
+        verify: {
+          isRequire: true,
+          message: "请填写活动名称",
+          rules: [
+            {
+              validator: (rule, value, callback) => {
+                console.log(value);
+                callback();
+              },
+              trigger: ""
             }
-          };
-        default:
-          break;
+          ]
+        }
       }
     },
     editFormConfig(item) {
