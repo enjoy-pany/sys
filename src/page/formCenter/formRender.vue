@@ -1,6 +1,6 @@
 <template>
   <div class="formMain">
-    <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
+    <el-form ref="form" :model="form" :rules="rules" size="small" label-width="120px">
       <div class="form-item" v-for="item in formRenderData" :key="item.id">
         <el-form-item v-if="item.type === 1" :label="item.name" :prop="item.key">
           <el-col :span="6">
@@ -63,7 +63,10 @@
               ]
             },
             // 关联信息
-            related: {}
+            related: {
+              key: '',
+              value: null
+            }
           },
           {
             id: '2',
@@ -100,7 +103,10 @@
               ]
             },
             // 关联信息
-            related: {}
+            related: {
+              key: '',
+              value: null
+            }
           },
           {
             id: '3',
@@ -138,7 +144,10 @@
               ]
             },
             // 关联信息
-            related: {}
+            related: {
+              key: '',
+              value: null
+            }
           }
         ]
       }

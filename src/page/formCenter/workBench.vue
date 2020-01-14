@@ -1,7 +1,7 @@
 <template>
   <div class="benchWrap">
     <div class="toolBar">
-      <el-form size="small" label-width="70px">
+      <el-form size="small" label-width="80px">
         <draggable
           v-model="formModel"
           :group="{ name: 'form', pull: 'clone', put: false}"
@@ -72,7 +72,7 @@
               </el-select>
             </div>
             <div class="formItem" v-if="item.type === 3">
-              <el-date-picker type="date" v-model="item.value"></el-date-picker>
+              <el-date-picker type="date" v-model="item.value" :placeholder="item.config.placeholder"></el-date-picker>
             </div>
             <div class="formItem" v-if="item.type === 4">
               <el-switch v-model="item.value"></el-switch>
@@ -102,7 +102,7 @@
             </div>
             <div class="formItemTools">
               <span class="formIcon el-icon-s-tools" @click="editFormConfig(item)"></span>
-              <span class="formIcon el-icon-minus"></span>
+              <span class="formIcon el-icon-minus" @click="deleFormConfig(index)"></span>
             </div>
           </el-form-item>
         </draggable>
@@ -121,9 +121,9 @@
           <el-form-item label="键值">
             <el-input v-model="formConfig.key"></el-input>
           </el-form-item>
-          <el-form-item label="默认值">
+          <!-- <el-form-item label="默认值">
             <el-input v-model="formConfig.value"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="options" v-if="formConfig.options.length>0">
             <el-row v-for="(item, index) in formConfig.options" :key="index">
               <el-col :span="10">
@@ -137,8 +137,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="2" style="margin-left: 10px">
-                <span class="el-icon-circle-plus-outline"></span>
-                <span class="el-icon-remove-outline"></span>
+                <span class="el-icon-circle-plus-outline" @click="addOptionItem(index)"></span>
+                <span class="el-icon-remove-outline" @click="deleOptionItem(index)"></span>
               </el-col>
             </el-row>
           </el-form-item>
@@ -154,8 +154,25 @@
           <el-form-item label="校验规则">
             <el-input v-model="formConfig.name"></el-input>
           </el-form-item>
-          <el-form-item label="关联">
-            <el-input v-model="formConfig.name"></el-input>
+          <el-form-item label="关联展示">
+            <el-select v-model="formConfig.related.key">
+              <el-option
+                v-for="(item, index) in formData"
+                :disabled="item.key === formConfig.key"
+                :key="index"
+                :label="item.name"
+                :value="item.key"
+              ></el-option>
+            </el-select>
+            等于
+            <el-select v-model="formConfig.related.value">
+              <el-option
+                v-for="(item, index) in relatedOptions"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -263,9 +280,29 @@ export default {
               trigger: ""
             }
           ]
+        },
+        // 关联信息
+        related: {
+          key: '',
+          value: null
         }
       }
     };
+  },
+  computed: {
+    relatedOptions() {
+      if(this.formConfig.related.key) {
+        let obj = {}
+        this.formData.map(item => {
+          if(item.key === this.formConfig.related.key) {
+            obj = this.deepCopy(item)
+          }
+        })
+        return obj.options
+      }else {
+        return []
+      }
+    }
   },
   methods: {
     deepCopy(obj) {
@@ -296,12 +333,29 @@ export default {
               trigger: ""
             }
           ]
+        },
+        // 关联信息
+        related: {
+          key: '',
+          value: null
         }
       }
+    },
+    addOptionItem(index) {
+      this.formConfig.options.splice(index+1, 0, {
+        label: "自定义选项",
+        value: this.formConfig.options.length+1
+      })
+    },
+    deleOptionItem(index) {
+      this.formConfig.options.splice(index, 1)
     },
     editFormConfig(item) {
       this.dialogFormVisible = true;
       this.formConfig = item;
+    },
+    deleFormConfig(index) {
+      this.formData.splice(index,1)
     },
     onSubmit() {
       console.log("submit!", this.formData);

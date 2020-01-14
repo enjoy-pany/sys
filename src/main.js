@@ -35,6 +35,8 @@ require('@/mock')
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
+// Element 自定义配置
+ElementUI.Form.props.labelSuffix.default = ':'
 
 //全局组件
 import myCode from '@/components/Code.vue'
