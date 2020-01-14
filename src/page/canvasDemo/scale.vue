@@ -92,7 +92,7 @@ export default {
         const that = this;
         this.canvas = new Canvas(canvas);
 
-        this.loadImg('./static/images/timg.jpeg')
+        this.loadImg('/static/images/timg.jpeg')
     }
 }
 </script>
