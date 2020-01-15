@@ -5,7 +5,8 @@
         <draggable
           v-model="formModel"
           :group="{ name: 'form', pull: 'clone', put: false}"
-          :clone="cloneDog">
+          :clone="cloneDog"
+        >
           <el-form-item v-for="(item, index) in formModel" :key="index" :label="item.label">
             <div class="formItem" v-if="item.type === 1">
               <el-input v-model="item.value"></el-input>
@@ -72,7 +73,11 @@
               </el-select>
             </div>
             <div class="formItem" v-if="item.type === 3">
-              <el-date-picker type="date" v-model="item.value" :placeholder="item.config.placeholder"></el-date-picker>
+              <el-date-picker
+                type="date"
+                v-model="item.value"
+                :placeholder="item.config.placeholder"
+              ></el-date-picker>
             </div>
             <div class="formItem" v-if="item.type === 4">
               <el-switch v-model="item.value"></el-switch>
@@ -123,7 +128,7 @@
           </el-form-item>
           <!-- <el-form-item label="默认值">
             <el-input v-model="formConfig.value"></el-input>
-          </el-form-item> -->
+          </el-form-item>-->
           <el-form-item label="options" v-if="formConfig.options.length>0">
             <el-row v-for="(item, index) in formConfig.options" :key="index">
               <el-col :span="10">
@@ -151,8 +156,32 @@
           <el-form-item label="tips">
             <el-input v-model="formConfig.config.tips"></el-input>
           </el-form-item>
-          <el-form-item label="校验规则">
-            <el-input v-model="formConfig.name"></el-input>
+          <!-- 输入框时展示校验规则 -->
+          <el-form-item label="校验规则" v-show="formConfig.type === 1">
+            <el-row>
+              <el-col :span="8">
+                <el-select v-model="formConfig.verify.vertifyType">
+                  <el-option
+                    v-for="(fItem, fIndex) in verifyOptions"
+                    :key="fIndex"
+                    :label="fItem.label"
+                    :value="fItem.value"
+                  ></el-option>
+                </el-select>
+              </el-col>
+              <el-col :span="14" style="margin-left: 10px">
+                <el-input
+                  v-if="formConfig.verify.vertifyType === 1"
+                  v-model="formConfig.verify.maxLength"
+                  placeholder="请输入最大长度限制"
+                ></el-input>
+                <el-input
+                  v-if="formConfig.verify.vertifyType === 2"
+                  v-model="formConfig.verify.regular"
+                  placeholder="请输入正则表达式"
+                ></el-input>
+              </el-col>
+            </el-row>
           </el-form-item>
           <el-form-item label="关联展示">
             <el-select v-model="formConfig.related.key">
@@ -163,8 +192,7 @@
                 :label="item.name"
                 :value="item.key"
               ></el-option>
-            </el-select>
-            等于
+            </el-select>等于
             <el-select v-model="formConfig.related.value">
               <el-option
                 v-for="(item, index) in relatedOptions"
@@ -186,8 +214,20 @@ export default {
     draggable
   },
   data() {
+    /* 
+      1: 输入框
+      2: 下拉框
+      3: 时间选择
+      4: 开关
+      5: 多选
+      6: 单选
+      7: 文本域
+      8: 上传组件
+      9: ... 
+    */
     return {
       dialogFormVisible: false,
+      // 左边工具栏数据
       formModel: [
         {
           type: 1,
@@ -255,7 +295,9 @@ export default {
           value: ""
         }
       ],
+      // 右边渲染数据也是最终输出的数据结构
       formData: [],
+      // 编辑时的配置数据（里面的数据为默认值，在编辑时会被替换掉）
       formConfig: {
         type: null,
         name: "",
@@ -271,6 +313,9 @@ export default {
         verify: {
           isRequire: true,
           message: "",
+          verifyType: 1, //校验类型
+          regular: "", // 正则
+          maxLength: null, // 最大长度限制
           rules: [
             {
               validator: (rule, value, callback) => {
@@ -283,38 +328,56 @@ export default {
         },
         // 关联信息
         related: {
-          key: '',
+          key: "",
           value: null
         }
-      }
+      },
+      // 校验规则枚举
+      verifyOptions: [
+        {
+          label: "长度校验",
+          value: 1
+        },
+        {
+          label: "正则校验",
+          value: 2
+        },
+        {
+          label: "自定义校验规则",
+          value: 3
+        }
+      ]
     };
   },
   computed: {
+    // 关联数据选项
     relatedOptions() {
-      if(this.formConfig.related.key) {
-        let obj = {}
+      if (this.formConfig.related.key) {
+        let obj = {};
         this.formData.map(item => {
-          if(item.key === this.formConfig.related.key) {
-            obj = this.deepCopy(item)
+          if (item.key === this.formConfig.related.key) {
+            obj = this.deepCopy(item);
           }
-        })
-        return obj.options
-      }else {
-        return []
+        });
+        return obj.options;
+      } else {
+        return [];
       }
     }
   },
   methods: {
     deepCopy(obj) {
-      return JSON.parse(JSON.stringify(obj))
+      return JSON.parse(JSON.stringify(obj));
     },
+    // 把左边的控件拖动到右边混淆的数据
+    // formData的数据项
     cloneDog(obj) {
       return {
         type: obj.type,
         name: obj.label, //label
         value: obj.value,
         key: "",
-        options: obj.options?this.deepCopy(obj.options):[],
+        options: obj.options ? this.deepCopy(obj.options) : [],
         // 基础配置
         config: {
           placeholder: "",
@@ -324,6 +387,9 @@ export default {
         verify: {
           isRequire: true,
           message: "请填写活动名称",
+          verifyType: 1, //校验类型
+          regular: "", // 正则
+          maxLength: null, // 最大长度限制
           rules: [
             {
               validator: (rule, value, callback) => {
@@ -336,26 +402,26 @@ export default {
         },
         // 关联信息
         related: {
-          key: '',
+          key: "",
           value: null
         }
-      }
+      };
     },
     addOptionItem(index) {
-      this.formConfig.options.splice(index+1, 0, {
+      this.formConfig.options.splice(index + 1, 0, {
         label: "自定义选项",
-        value: this.formConfig.options.length+1
-      })
+        value: this.formConfig.options.length + 1
+      });
     },
     deleOptionItem(index) {
-      this.formConfig.options.splice(index, 1)
+      this.formConfig.options.splice(index, 1);
     },
     editFormConfig(item) {
       this.dialogFormVisible = true;
       this.formConfig = item;
     },
     deleFormConfig(index) {
-      this.formData.splice(index,1)
+      this.formData.splice(index, 1);
     },
     onSubmit() {
       console.log("submit!", this.formData);
