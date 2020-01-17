@@ -5,50 +5,12 @@
         <draggable
           v-model="formModel"
           :group="{ name: 'form', pull: 'clone', put: false}"
-          :clone="cloneDog"
-        >
+          :clone="cloneDog">
           <el-form-item v-for="(item, index) in formModel" :key="index" :label="item.label">
-            <div class="formItem" v-if="item.type === 1">
-              <el-input v-model="item.value"></el-input>
-            </div>
-            <div class="formItem" v-if="item.type === 2">
-              <el-select v-model="item.value">
-                <el-option
-                  v-for="(fItem, fIndex) in item.options"
-                  :key="fIndex"
-                  :label="fItem.label"
-                  :value="fItem.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div class="formItem" v-if="item.type === 3">
-              <el-date-picker type="date" v-model="item.value"></el-date-picker>
-            </div>
-            <div class="formItem" v-if="item.type === 4">
-              <el-switch v-model="item.value"></el-switch>
-            </div>
-            <div class="formItem" v-if="item.type === 5">
-              <el-checkbox-group v-model="item.value">
-                <el-checkbox
-                  v-for="(fItem, fIndex) in item.options"
-                  :key="fIndex"
-                  :label="fItem.label"
-                  :value="fItem.value"
-                ></el-checkbox>
-              </el-checkbox-group>
-            </div>
-            <div class="formItem" v-if="item.type === 6">
-              <el-radio-group v-model="item.value">
-                <el-radio
-                  v-for="(fItem, fIndex) in item.options"
-                  :key="fIndex"
-                  :label="fItem.label"
-                  :value="fItem.value"
-                ></el-radio>
-              </el-radio-group>
-            </div>
-            <div class="formItem" v-if="item.type === 7">
-              <el-input type="textarea" v-model="item.value"></el-input>
+            <div class="formItem">
+              <component 
+                :is="item.component" 
+                :maindata="item"></component>
             </div>
           </el-form-item>
         </draggable>
@@ -59,51 +21,10 @@
         <div v-if="formData.length<=0" class="blankTip">将表单组件拖到这里</div>
         <draggable v-model="formData" group="form" class="dragWrap">
           <el-form-item v-for="(item, index) in formData" :key="index" :label="item.name">
-            <div class="formItem" v-if="item.type === 1">
-              <el-input v-model="item.value" :placeholder="item.config.placeholder"></el-input>
-            </div>
-            <div class="formItem" v-if="item.type === 2">
-              <el-select v-model="item.value">
-                <el-option
-                  v-for="(fItem, fIndex) in item.options"
-                  :key="fIndex"
-                  :label="fItem.label"
-                  :value="fItem.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div class="formItem" v-if="item.type === 3">
-              <el-date-picker
-                type="date"
-                v-model="item.value"
-                :placeholder="item.config.placeholder"
-              ></el-date-picker>
-            </div>
-            <div class="formItem" v-if="item.type === 4">
-              <el-switch v-model="item.value"></el-switch>
-            </div>
-            <div class="formItem" v-if="item.type === 5">
-              <el-checkbox-group v-model="item.value">
-                <el-checkbox
-                  v-for="(fItem, fIndex) in item.options"
-                  :key="fIndex"
-                  :label="fItem.label"
-                  :value="fItem.value"
-                ></el-checkbox>
-              </el-checkbox-group>
-            </div>
-            <div class="formItem" v-if="item.type === 6">
-              <el-radio-group v-model="item.value">
-                <el-radio
-                  v-for="(fItem, fIndex) in item.options"
-                  :key="fIndex"
-                  :label="fItem.label"
-                  :value="fItem.value"
-                ></el-radio>
-              </el-radio-group>
-            </div>
-            <div class="formItem" v-if="item.type === 7">
-              <el-input type="textarea" v-model="item.value"></el-input>
+            <div class="formItem">
+              <component 
+                :is="item.component" 
+                :maindata="item"></component>
             </div>
             <div class="formItemTools">
               <span class="formIcon el-icon-s-tools" @click="editFormConfig(item)"></span>
@@ -209,12 +130,30 @@
 </template>
 <script>
 import draggable from "vuedraggable";
+import upload from './components/Upload.vue'
+import myinput from './components/Input.vue'
+import mycheckbox from './components/Checkbox.vue'
+import myselect from './components/Select.vue'
+import myswitch from './components/Switch.vue'
+import myradio from './components/Radio.vue'
+import mytextarea from './components/Textarea.vue'
+import datepicker from './components/DatePicker.vue'
+
 export default {
   components: {
-    draggable
+    draggable,
+    upload,
+    myinput,
+    mycheckbox,
+    myselect,
+    myswitch,
+    myradio,
+    mytextarea,
+    datepicker
   },
   data() {
     /* 
+    type:
       1: 输入框
       2: 下拉框
       3: 时间选择
@@ -232,7 +171,8 @@ export default {
         {
           type: 1,
           label: "输入框", //label
-          key: ""
+          value: "",
+          component: 'myinput'
         },
         {
           type: 2,
@@ -247,17 +187,20 @@ export default {
               label: "选项二",
               value: 2
             }
-          ]
+          ],
+          component: 'myselect'
         },
         {
           type: 3,
           label: "时间选择",
-          value: ""
+          value: "",
+          component: 'datepicker'
         },
         {
           type: 4,
           label: "开关",
-          value: false
+          value: false,
+          component: 'myswitch'
         },
         {
           type: 5,
@@ -272,7 +215,8 @@ export default {
               label: "选项二",
               value: 2
             }
-          ]
+          ],
+          component: 'mycheckbox'
         },
         {
           type: 6,
@@ -287,12 +231,19 @@ export default {
               label: "选项二",
               value: 2
             }
-          ]
+          ],
+          component: 'myradio'
         },
         {
           type: 7,
           label: "文本域",
-          value: ""
+          value: "",
+          component: 'mytextarea'
+        },
+        {
+          type: 8,
+          label: "文件上传",
+          component: 'upload'
         }
       ],
       // 右边渲染数据也是最终输出的数据结构
@@ -377,6 +328,7 @@ export default {
         name: obj.label, //label
         value: obj.value,
         key: "",
+        component: obj.component,
         options: obj.options ? this.deepCopy(obj.options) : [],
         // 基础配置
         config: {
